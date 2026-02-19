@@ -2,92 +2,127 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Special Cinematic Surprise</title>
+<title>For Someone Truly Special</title>
 
 <style>
 body{
   margin:0;
-  background:black;
   overflow:hidden;
-  font-family:Arial;
-  text-align:center;
+  font-family:'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
   color:white;
+  text-align:center;
 }
 
-/* Galaxy */
+/* Galaxy Stars */
 .star{
   position:absolute;
   width:2px;
   height:2px;
   background:white;
-  animation: twinkle 2s infinite alternate;
+  animation: twinkle 3s infinite alternate;
 }
 @keyframes twinkle{
   from{opacity:0.2;}
   to{opacity:1;}
 }
 
-/* Center content */
+/* Main Center */
 #main{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+  width:90%;
 }
 
-/* Hacker text */
+/* Hacker Intro */
 .hacker{
-  color:lime;
+  color:#00ff99;
   font-family:monospace;
   white-space:pre-line;
+  font-size:18px;
+  letter-spacing:1px;
 }
 
-/* Romantic */
+/* Romantic Message */
 .romantic{
-  font-size:40px;
-  animation:fade 2s infinite alternate;
+  font-size:45px;
+  font-weight:300;
+  line-height:1.4;
+  animation: fade 3s ease-in-out infinite alternate;
 }
 @keyframes fade{
-  from{opacity:0.5;}
-  to{opacity:1;}
+  from{opacity:0.6; transform:scale(0.98);}
+  to{opacity:1; transform:scale(1.02);}
 }
 
-/* Heart Rain */
+/* Premium Heart Rain */
 .heart{
   position:absolute;
-  color:red;
-  font-size:20px;
+  font-size:22px;
   animation: fall linear infinite;
 }
 @keyframes fall{
-  0%{top:-10%;opacity:1;}
-  100%{top:110%;opacity:0;}
+  0%{top:-10%; opacity:1;}
+  100%{top:110%; opacity:0;}
 }
 
-/* 3D Box */
+/* Firework Glow */
+.spark{
+  position:absolute;
+  font-size:22px;
+  animation: explode 1s ease-out forwards;
+}
+@keyframes explode{
+  0%{opacity:1;}
+  100%{opacity:0; transform:scale(1.5);}
+}
+
+/* Glass 3D Box */
 .box{
-  width:220px;
-  height:220px;
+  width:250px;
+  height:250px;
   margin:auto;
   position:relative;
   transform-style:preserve-3d;
-  animation:spin 8s linear infinite;
+  animation:spin 10s linear infinite;
 }
 .face{
   position:absolute;
-  width:220px;
-  height:220px;
-  background:hotpink;
+  width:250px;
+  height:250px;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:25px;
+  font-size:26px;
+  border-radius:20px;
 }
-.front{transform:translateZ(110px);}
-.back{transform:rotateY(180deg) translateZ(110px);}
+.front{transform:translateZ(125px);}
+.back{transform:rotateY(180deg) translateZ(125px);}
 @keyframes spin{
   0%{transform:rotateY(0deg);}
   100%{transform:rotateY(360deg);}
+}
+
+/* Button */
+.start-btn{
+  padding:12px 25px;
+  background:#ff4e91;
+  border:none;
+  border-radius:30px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:20px;
+  transition:0.3s;
+}
+.start-btn:hover{
+  background:#ff1e70;
+  transform:scale(1.05);
 }
 </style>
 </head>
@@ -95,19 +130,17 @@ body{
 <body>
 
 <audio id="bgmusic" loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mp3">
 </audio>
 
-<div id="main"></div>
+<div id="main">
+  <h2>✨ A Small Surprise Awaits ✨</h2>
+  <button class="start-btn" onclick="startExperience()">Click To Begin 💖</button>
+</div>
 
 <script>
 
-/* Start Music on Click */
-document.body.addEventListener("click",()=>{
-  document.getElementById("bgmusic").play();
-});
-
-/* Galaxy Stars */
+/* Galaxy */
 for(let i=0;i<300;i++){
   let star=document.createElement("div");
   star.className="star";
@@ -116,8 +149,54 @@ for(let i=0;i<300;i++){
   document.body.appendChild(star);
 }
 
-/* Heart Rain Continuous */
-function heartRain(){
+/* Start Experience */
+function startExperience(){
+  document.getElementById("bgmusic").play();
+  document.getElementById("main").innerHTML="";
+  hackerIntro();
+}
+
+/* Hacker Intro */
+function hackerIntro(){
+  let main=document.getElementById("main");
+  let hacker=document.createElement("div");
+  hacker.className="hacker";
+  main.appendChild(hacker);
+
+  let lines=[
+  "Initializing Emotional Protocol...",
+  "Connecting To Heart Server...",
+  "Decrypting Hidden Feelings...",
+  "Access Granted 💖"
+  ];
+
+  let i=0;
+  function typeLine(){
+    if(i<lines.length){
+      hacker.innerHTML+=lines[i]+"\n";
+      i++;
+      setTimeout(typeLine,1000);
+    }else{
+      setTimeout(showRomantic,1500);
+    }
+  }
+  typeLine();
+}
+
+/* Romantic Reveal */
+function showRomantic(){
+  let main=document.getElementById("main");
+  main.innerHTML="";
+  let romantic=document.createElement("div");
+  romantic.className="romantic";
+  romantic.innerHTML="💖 Hello Shivani 💖<br>You Make My World Brighter ✨";
+  main.appendChild(romantic);
+  fireworks();
+  setTimeout(show3D,5000);
+}
+
+/* Heart Rain */
+setInterval(()=>{
   let heart=document.createElement("div");
   heart.className="heart";
   heart.innerText="❤️";
@@ -125,62 +204,25 @@ function heartRain(){
   heart.style.animationDuration=(Math.random()*3+2)+"s";
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),5000);
-}
-setInterval(heartRain,200);
+},300);
 
-/* Fireworks Effect */
+/* Fireworks */
 function fireworks(){
-  for(let i=0;i<30;i++){
+  for(let i=0;i<40;i++){
     let spark=document.createElement("div");
-    spark.style.position="absolute";
+    spark.className="spark";
+    spark.innerText="✨";
     spark.style.left="50%";
     spark.style.top="50%";
-    spark.style.color="yellow";
-    spark.innerText="✨";
-    spark.style.transform=`translate(${Math.random()*400-200}px,${Math.random()*400-200}px)`;
+    spark.style.transform=`translate(${Math.random()*500-250}px,${Math.random()*500-250}px)`;
     document.body.appendChild(spark);
     setTimeout(()=>spark.remove(),1000);
   }
 }
 
-/* Hacker Intro */
-let main=document.getElementById("main");
-let hacker=document.createElement("div");
-hacker.className="hacker";
-main.appendChild(hacker);
-
-let lines=[
-"Hello Shivani....",
-"I Miss u...",
-"that is only for you....",
-"❤️❤️❤️❤️..."
-];
-
-let i=0;
-function typeLine(){
-  if(i<lines.length){
-    hacker.innerHTML+=lines[i]+"\n";
-    i++;
-    setTimeout(typeLine,1000);
-  }else{
-    setTimeout(showRomantic,1500);
-  }
-}
-typeLine();
-
-/* Romantic Reveal */
-function showRomantic(){
-  main.innerHTML="";
-  let romantic=document.createElement("div");
-  romantic.className="romantic";
-  romantic.innerHTML="💖 Hello Shivani Lawyer Medam 💖<br>You Are My Favorite Notification ✨";
-  main.appendChild(romantic);
-  fireworks();
-  setTimeout(show3D,4000);
-}
-
 /* 3D Final */
 function show3D(){
+  let main=document.getElementById("main");
   main.innerHTML="";
   let box=document.createElement("div");
   box.className="box";
@@ -191,7 +233,7 @@ function show3D(){
 
   let back=document.createElement("div");
   back.className="face back";
-  back.innerHTML="😎 Surprise 😎";
+  back.innerHTML="Forever Special 💫";
 
   box.appendChild(front);
   box.appendChild(back);
